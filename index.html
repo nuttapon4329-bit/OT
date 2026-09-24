@@ -58,6 +58,9 @@
                         <div class="text-[9px] uppercase tracking-wider text-amber-300/90 font-bold">รายรับรวมสุทธิ</div>
                         <div class="text-sm md:text-base font-extrabold text-emerald-400 val-display" id="topBarTotalIncome">0.00 ฿</div>
                     </div>
+                    <button onclick="openSummaryModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer" title="รายงานสรุปภาพรวม">
+                        📊 สรุปภาพรวม
+                    </button>
                     <button onclick="togglePrivacy()" id="privacyToggleBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 w-7 h-7 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ซ่อน/แสดง">
                         👁️
                     </button>
@@ -227,6 +230,43 @@
             </div>
         </div>
     </main>
+
+    <!-- Modal: รายงานสรุปภาพรวมรายเดือน -->
+    <div id="summaryModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-3 sm:p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-4xl p-5 md:p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                <div class="flex items-center gap-2">
+                    <span class="text-lg">📊</span>
+                    <h3 class="font-bold text-cyan-400 text-sm md:text-base">รายงานสรุปภาพรวม OT และรายรับทุกรอบเดือน</h3>
+                </div>
+                <button onclick="closeSummaryModal()" class="text-slate-400 hover:text-white text-sm font-bold w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center transition">✕</button>
+            </div>
+            
+            <div class="custom-scrollbar overflow-y-auto pr-1 flex-1 space-y-3">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse text-xs">
+                        <thead class="bg-slate-950 sticky top-0 border-b border-slate-800 text-slate-400 text-[11px]">
+                            <tr>
+                                <th class="py-2.5 px-3 font-medium">รอบเดือน</th>
+                                <th class="py-2.5 px-2 text-center font-medium">1.0 ชม.</th>
+                                <th class="py-2.5 px-2 text-center font-medium">1.5 ชม.</th>
+                                <th class="py-2.5 px-2 text-center font-medium">3.0 ชม.</th>
+                                <th class="py-2.5 px-2 text-right font-medium text-amber-400">ยอดรวม OT</th>
+                                <th class="py-2.5 px-3 text-right font-medium text-emerald-400">รายรับรวมสุทธิ</th>
+                            </tr>
+                        </thead>
+                        <tbody id="summaryTableBody" class="divide-y divide-slate-800/50">
+                            <!-- Injected via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="flex justify-end pt-2 border-t border-slate-800">
+                <button onclick="closeSummaryModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-5 py-2 rounded-xl text-xs font-medium transition cursor-pointer">ปิดหน้าต่าง</button>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal: เพิ่มรอบเดือน -->
     <div id="newCycleModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
@@ -646,6 +686,80 @@
                     if (el.dataset.rawText) el.innerHTML = el.dataset.rawText;
                 }
             });
+        }
+
+        // Summary Modal Logic
+        function openSummaryModal() {
+            const tbody = document.getElementById('summaryTableBody');
+            tbody.innerHTML = '';
+            
+            const sortedKeys = Object.keys(dbData.allCyclesData).sort((a, b) => new Date(dbData.allCyclesData[b].startDate) - new Date(dbData.allCyclesData[a].startDate));
+
+            sortedKeys.forEach(key => {
+                let cycle = dbData.allCyclesData[key];
+                let s = cycle.startDate.split('-');
+                let e = cycle.endDate.split('-');
+                let label = `${parseInt(s[2])} ${thaiMonths[parseInt(s[1])]} - ${parseInt(e[2])} ${thaiMonths[parseInt(e[1])]}`;
+
+                let baseSalary = cycle.baseSalary || 0;
+                let baseRate = baseSalary > 0 ? (baseSalary / 30 / 8) : 77.5375;
+
+                let h1Total = 0, h15Total = 0, h3Total = 0, otMoneyTotal = 0;
+                let foodNormalDaysCount = 0, foodOTCount = 0, foodHolidayCount = 0, workDaysCount = 0;
+                let sumMoneyCondBonus = 0;
+
+                cycle.otData.forEach(row => {
+                    let h1 = parseFloat(row.h1) || 0;
+                    let h15 = parseFloat(row.h15) || 0;
+                    let h3 = parseFloat(row.h3) || 0;
+                    let bonus = parseFloat(row.bonus) || 0;
+                    let condBonus = (h15 >= 6 || h3 >= 6) ? 100 : 0;
+
+                    if (row.worked) {
+                        workDaysCount++;
+                        if (h1 < 0) foodNormalDaysCount--;
+                        else if (h1 !== 1) foodNormalDaysCount++;
+                    }
+                    if (row.holiday && h1 > 0) foodHolidayCount++;
+                    if (h15 > 0 || h3 > 0) foodOTCount++;
+
+                    h1Total += h1;
+                    h15Total += h15;
+                    h3Total += h3;
+
+                    let r1 = h1 * baseRate;
+                    let r15 = h15 * (baseRate * 1.5);
+                    let r3 = h3 * (baseRate * 3.0);
+                    otMoneyTotal += (r1 + r15 + r3 + condBonus + bonus);
+                    sumMoneyCondBonus += condBonus;
+                });
+
+                let totalTravelDays = workDaysCount + foodHolidayCount;
+                let incFoodNormal = Math.max(0, foodNormalDaysCount) * 50;
+                let incTravel = totalTravelDays * 30;
+                let incFoodOT = foodOTCount * 30;
+                let incFoodHoliday = foodHolidayCount * 100;
+                let incentive = cycle.incentiveInput || 0;
+
+                let totalIncome = baseSalary + 1500 + 1000 + incFoodOT + incFoodNormal + incFoodHoliday + incTravel + otMoneyTotal + incentive;
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="py-2.5 px-3 font-semibold text-slate-200">${label}</td>
+                    <td class="py-2.5 px-2 text-center text-amber-300 font-medium">${h1Total} ชม.</td>
+                    <td class="py-2.5 px-2 text-center text-amber-300 font-medium">${h15Total} ชม.</td>
+                    <td class="py-2.5 px-2 text-center text-amber-300 font-medium">${h3Total} ชม.</td>
+                    <td class="py-2.5 px-2 text-right text-amber-400 font-bold val-display">${otMoneyTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ฿</td>
+                    <td class="py-2.5 px-3 text-right text-emerald-400 font-extrabold val-display">${totalIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ฿</td>
+                `;
+                tbody.appendChild(tr);
+            });
+
+            document.getElementById('summaryModal').classList.remove('hidden');
+        }
+
+        function closeSummaryModal() {
+            document.getElementById('summaryModal').classList.add('hidden');
         }
 
         // Settings & Expenses Modals
