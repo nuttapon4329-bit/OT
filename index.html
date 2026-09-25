@@ -219,7 +219,7 @@
                         </div>
                     </div>
 
-                    <!-- ส่วนคำนวณ ค่าใช้จ่ายต่อวัน & ค่าน้ำมัน & โอนเก็บ -->
+                    <!-- ส่วนคำนวณ ค่าใช้จ่ายต่อวัน & โอนเก็บ -->
                     <div class="bg-cyan-950/20 p-3.5 rounded-xl border border-cyan-900/30 space-y-2 text-xs">
                         <div class="font-bold text-cyan-400 mb-1 flex items-center gap-1 text-xs"><span>⛽</span> ประมาณการค่าใช้จ่ายรายวัน & เงินโอนเก็บ</div>
                         
@@ -239,8 +239,8 @@
                             <span id="totalDailyExpenseCalc" class="text-right font-semibold text-cyan-300 val-display">0.00 ฿</span>
                         </div>
                         
-                        <div class="border-t border-cyan-900/40 pt-2 flex items-center justify-between font-extrabold text-sm text-cyan-400">
-                            <span>โอนเก็บ (คงเหลือสุทธิ - ค่าใช้จ่าย)</span>
+                        <div class="border-t border-cyan-900/40 pt-2 flex items-center justify-between font-extrabold text-sm">
+                            <span>โอนเก็บ</span>
                             <span id="transferSavings" class="val-display">0.00 ฿</span>
                         </div>
                     </div>
@@ -743,7 +743,17 @@
             document.getElementById('totalDailyExpenseCalc').innerText = formatVal(totalDailyExpense);
 
             let transferSavings = netBalance - totalDailyExpense;
-            document.getElementById('transferSavings').innerText = formatVal(transferSavings);
+            
+            // อัปเดตช่อง "โอนเก็บ" พร้อมเงื่อนไขสี (บวก = เขียว, ติดลบ = แดง)
+            const savingsEl = document.getElementById('transferSavings');
+            savingsEl.innerText = formatVal(transferSavings);
+            if (!isPrivacyMode) {
+                if (transferSavings < 0) {
+                    savingsEl.className = "val-display text-rose-500 font-extrabold";
+                } else {
+                    savingsEl.className = "val-display text-emerald-400 font-extrabold";
+                }
+            }
         }
 
         function togglePrivacy() {
