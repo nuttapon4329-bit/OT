@@ -23,7 +23,7 @@
         <div class="text-amber-400 font-medium text-xs">กำลังซิงค์ข้อมูลจาก Google Sheet...</div>
     </div>
 
-    <!-- Top Navigation Bar (Full Width Container) -->
+    <!-- Top Navigation Bar -->
     <header class="border-b border-amber-500/30 bg-gradient-to-r from-slate-950 via-[#0d1527] to-slate-950 backdrop-blur-xl sticky top-0 z-40 px-4 xl:px-8 py-3.5 shadow-xl">
         <div class="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
@@ -43,7 +43,6 @@
 
             <!-- Global Controls -->
             <div class="flex flex-wrap items-center gap-2.5 bg-slate-900/95 p-1.5 rounded-2xl border border-slate-800 shadow-inner w-full md:w-auto justify-between">
-                <!-- ย้ายปุ่มสรุปภาพรวมมาไว้ทางซ้ายสุดตรงนี้ -->
                 <button onclick="openSummaryModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5" title="รายงานสรุปภาพรวม">
                     <span>📊</span> สรุปภาพรวม
                 </button>
@@ -61,7 +60,6 @@
                 <div class="flex items-center gap-2.5 pl-2.5 border-l border-slate-800">
                     <div class="text-right">
                         <div class="text-[10px] uppercase tracking-wider text-amber-300/90 font-bold">รายรับรวมสุทธิ</div>
-                        <!-- ขยายขนาดตัวเลขรายรับรวมสุทธิขึ้นอีก 1 เท่า (จากเดิม text-sm/base เป็น text-2xl/3xl) -->
                         <div class="text-xl md:text-3xl font-black text-emerald-400 val-display leading-tight" id="topBarTotalIncome">0.00 ฿</div>
                     </div>
                     <button onclick="togglePrivacy()" id="privacyToggleBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 w-8 h-8 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ซ่อน/แสดง">
@@ -218,6 +216,32 @@
                         <div id="dynamicExpensesContainer" class="space-y-1.5"></div>
                         <div class="border-t border-amber-900/40 pt-2 grid grid-cols-2 items-center font-bold text-amber-400 text-xs">
                             <span>รวมรายจ่าย</span><span id="totalExpenses" class="text-right text-sm val-display">0.00 ฿</span>
+                        </div>
+                    </div>
+
+                    <!-- ส่วนคำนวณ ค่าใช้จ่ายต่อวัน & ค่าน้ำมัน & โอนเก็บ -->
+                    <div class="bg-cyan-950/20 p-3.5 rounded-xl border border-cyan-900/30 space-y-2 text-xs">
+                        <div class="font-bold text-cyan-400 mb-1 flex items-center gap-1 text-xs"><span>⛽</span> ประมาณการค่าใช้จ่ายรายวัน & เงินโอนเก็บ</div>
+                        
+                        <div class="grid grid-cols-2 items-center gap-2">
+                            <span class="text-slate-300">ค่าใช้จ่ายต่อวัน (฿)</span>
+                            <input type="number" id="dailyExpenseRate" value="200" oninput="markDataChanged()" class="bg-slate-950 text-cyan-300 px-2 py-1 rounded-lg text-right border border-cyan-900/40 text-xs">
+                        </div>
+                        <div class="grid grid-cols-2 items-center gap-2">
+                            <span class="text-slate-300">ค่าน้ำมันต่อวัน (฿)</span>
+                            <input type="number" id="dailyFuelRate" value="40" oninput="markDataChanged()" class="bg-slate-950 text-cyan-300 px-2 py-1 rounded-lg text-right border border-cyan-900/40 text-xs">
+                        </div>
+                        <div class="text-[10px] text-slate-400 text-right pt-0.5">
+                            (คำนวณจากจำนวนวันทำงานทั้งหมดในรอบนี้: <span id="totalDaysCount" class="text-cyan-300 font-bold">0</span> วัน)
+                        </div>
+                        <div class="grid grid-cols-2 items-center gap-2 pt-1 border-t border-cyan-900/30 text-slate-300">
+                            <span>รวมค่าใช้จ่ายรายวันทั้งเดือน</span>
+                            <span id="totalDailyExpenseCalc" class="text-right font-semibold text-cyan-300 val-display">0.00 ฿</span>
+                        </div>
+                        
+                        <div class="border-t border-cyan-900/40 pt-2 flex items-center justify-between font-extrabold text-sm text-cyan-400">
+                            <span>โอนเก็บ (คงเหลือสุทธิ - ค่าใช้จ่าย)</span>
+                            <span id="transferSavings" class="val-display">0.00 ฿</span>
                         </div>
                     </div>
                 </div>
@@ -379,6 +403,8 @@
                 deductSocial: 875,
                 deductStudentLoan: 1080,
                 deductOther: 0,
+                dailyExpenseRate: 200,
+                dailyFuelRate: 40,
                 expensesList: [
                     { name: "ค่าเช่าห้อง", amount: 3200, paid: false },
                     { name: "ค่างวดบ้าน", amount: 4700, paid: false },
@@ -433,6 +459,8 @@
             cycle.deductSocial = parseFloat(document.getElementById('deductSocial').value) || 0;
             cycle.deductStudentLoan = parseFloat(document.getElementById('deductStudentLoan').value) || 0;
             cycle.deductOther = parseFloat(document.getElementById('deductOther').value) || 0;
+            cycle.dailyExpenseRate = parseFloat(document.getElementById('dailyExpenseRate').value) || 0;
+            cycle.dailyFuelRate = parseFloat(document.getElementById('dailyFuelRate').value) || 0;
         }
 
         function updateCycleSelectDropdown() {
@@ -493,6 +521,8 @@
                 deductSocial: lastCycle ? lastCycle.deductSocial : 875,
                 deductStudentLoan: lastCycle ? lastCycle.deductStudentLoan : 1080,
                 deductOther: 0,
+                dailyExpenseRate: lastCycle ? lastCycle.dailyExpenseRate : 200,
+                dailyFuelRate: lastCycle ? lastCycle.dailyFuelRate : 40,
                 expensesList: lastCycle ? JSON.parse(JSON.stringify(lastCycle.expensesList)) : [],
                 otData: otRows
             };
@@ -524,6 +554,8 @@
             document.getElementById('deductSocial').value = cycle.deductSocial;
             document.getElementById('deductStudentLoan').value = cycle.deductStudentLoan;
             document.getElementById('deductOther').value = cycle.deductOther || 0;
+            document.getElementById('dailyExpenseRate').value = cycle.dailyExpenseRate !== undefined ? cycle.dailyExpenseRate : 200;
+            document.getElementById('dailyFuelRate').value = cycle.dailyFuelRate !== undefined ? cycle.dailyFuelRate : 40;
 
             let s = cycle.startDate.split('-');
             let e = cycle.endDate.split('-');
@@ -698,7 +730,20 @@
             });
             document.getElementById('totalExpenses').innerText = formatVal(totalExpenses);
 
-            document.getElementById('netBalance').innerText = formatVal(totalIncome - totalDeductions - totalExpenses);
+            let netBalance = totalIncome - totalDeductions - totalExpenses;
+            document.getElementById('netBalance').innerText = formatVal(netBalance);
+
+            // คำนวณค่าใช้จ่ายรายวัน & ค่าน้ำมัน
+            let totalDaysInCycle = cycle.otData.length;
+            document.getElementById('totalDaysCount').innerText = totalDaysInCycle;
+
+            let dailyExpenseRate = parseFloat(document.getElementById('dailyExpenseRate').value) || 0;
+            let dailyFuelRate = parseFloat(document.getElementById('dailyFuelRate').value) || 0;
+            let totalDailyExpense = (dailyExpenseRate + dailyFuelRate) * totalDaysInCycle;
+            document.getElementById('totalDailyExpenseCalc').innerText = formatVal(totalDailyExpense);
+
+            let transferSavings = netBalance - totalDailyExpense;
+            document.getElementById('transferSavings').innerText = formatVal(transferSavings);
         }
 
         function togglePrivacy() {
