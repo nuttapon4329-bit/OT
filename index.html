@@ -42,8 +42,13 @@
             </div>
 
             <!-- Global Controls -->
-            <div class="flex flex-wrap items-center gap-2 bg-slate-900/95 p-1.5 rounded-2xl border border-slate-800 shadow-inner w-full md:w-auto justify-between">
-                <div class="px-2 py-1 flex items-center gap-1.5 overflow-x-auto">
+            <div class="flex flex-wrap items-center gap-2.5 bg-slate-900/95 p-1.5 rounded-2xl border border-slate-800 shadow-inner w-full md:w-auto justify-between">
+                <!-- ย้ายปุ่มสรุปภาพรวมมาไว้ทางซ้ายสุดตรงนี้ -->
+                <button onclick="openSummaryModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5" title="รายงานสรุปภาพรวม">
+                    <span>📊</span> สรุปภาพรวม
+                </button>
+
+                <div class="px-2 py-1 flex items-center gap-1.5 overflow-x-auto border-l border-slate-800 pl-2">
                     <span class="text-[11px] text-slate-400 font-medium">รอบ:</span>
                     <select id="selectMonthCycle" onchange="switchCycle(this.value)" class="bg-transparent text-amber-400 font-bold text-xs focus:outline-none cursor-pointer">
                         <!-- Injected -->
@@ -53,18 +58,16 @@
                     </button>
                 </div>
 
-                <div class="flex items-center gap-2 pl-2 border-l border-slate-800">
+                <div class="flex items-center gap-2.5 pl-2.5 border-l border-slate-800">
                     <div class="text-right">
-                        <div class="text-[9px] uppercase tracking-wider text-amber-300/90 font-bold">รายรับรวมสุทธิ</div>
-                        <div class="text-sm md:text-base font-extrabold text-emerald-400 val-display" id="topBarTotalIncome">0.00 ฿</div>
+                        <div class="text-[10px] uppercase tracking-wider text-amber-300/90 font-bold">รายรับรวมสุทธิ</div>
+                        <!-- ขยายขนาดตัวเลขรายรับรวมสุทธิขึ้นอีก 1 เท่า (จากเดิม text-sm/base เป็น text-2xl/3xl) -->
+                        <div class="text-xl md:text-3xl font-black text-emerald-400 val-display leading-tight" id="topBarTotalIncome">0.00 ฿</div>
                     </div>
-                    <button onclick="openSummaryModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer" title="รายงานสรุปภาพรวม">
-                        📊 สรุปภาพรวม
-                    </button>
-                    <button onclick="togglePrivacy()" id="privacyToggleBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 w-7 h-7 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ซ่อน/แสดง">
+                    <button onclick="togglePrivacy()" id="privacyToggleBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 w-8 h-8 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ซ่อน/แสดง">
                         👁️
                     </button>
-                    <button onclick="openSettingsModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 w-7 h-7 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ตั้งค่า">
+                    <button onclick="openSettingsModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 w-8 h-8 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ตั้งค่า">
                         ⚙️
                     </button>
                 </div>
@@ -74,7 +77,7 @@
 
     <main class="max-w-[1920px] mx-auto px-4 xl:px-8 mt-4 space-y-4">
 
-        <!-- Metrics Bar (Expanded Grid) -->
+        <!-- Metrics Bar -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
             <div class="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-xl p-3">
                 <div class="text-[10px] uppercase text-slate-400 font-medium">OT 1 แรง</div>
@@ -102,10 +105,10 @@
             </div>
         </div>
 
-        <!-- Main Workspace (Responsive 2-Column Split: Table wider on large screens) -->
+        <!-- Main Workspace -->
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
             
-            <!-- Left: Table (takes 7 columns) -->
+            <!-- Left: Table -->
             <div class="lg:col-span-7 bg-slate-900/85 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-2xl flex flex-col justify-between">
                 <div>
                     <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2.5 mb-3 border-b border-slate-800">
@@ -153,7 +156,7 @@
                 </div>
             </div>
 
-            <!-- Right: Income & Expenses (takes 5 columns) -->
+            <!-- Right: Income & Expenses -->
             <div class="lg:col-span-5 space-y-4">
                 <div class="bg-slate-900/85 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-2xl space-y-4">
                     <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
@@ -206,7 +209,7 @@
                         </div>
                     </div>
 
-                    <!-- รายจ่ายประจำ (มี Checkbox ติ๊กจ่ายแล้ว) -->
+                    <!-- รายจ่ายประจำ -->
                     <div class="bg-amber-950/15 p-3.5 rounded-xl border border-amber-900/30 space-y-2.5 text-xs">
                         <div class="flex justify-between items-center mb-1">
                             <span class="font-bold text-amber-400 flex items-center gap-1 text-xs"><span>💸</span> รายจ่ายประจำ</span>
