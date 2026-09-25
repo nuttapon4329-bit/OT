@@ -14,10 +14,14 @@
         .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 8px; }
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(100, 100, 100, 0.3); border-radius: 8px; }
 
-        /* 10 Pastel Themes Styling */
+        /* 11 Pastel & Dark Themes Styling */
         :root, html[data-theme="dark-slate"] {
             --bg-main: #030712; --bg-card: rgba(15, 23, 42, 0.85); --bg-sub: rgba(2, 6, 23, 0.6);
             --border-color: #1e293b; --text-main: #f8fafc; --accent-color: #fbbf24; --accent-glow: rgba(251, 191, 36, 0.2);
+        }
+        html[data-theme="pastel-gray"] {
+            --bg-main: #f3f4f6; --bg-card: rgba(255, 255, 255, 0.95); --bg-sub: rgba(229, 231, 235, 0.6);
+            --border-color: #d1d5db; --text-main: #1f2937; --accent-color: #4b5563; --accent-glow: rgba(75, 85, 99, 0.15);
         }
         html[data-theme="pastel-pink"] {
             --bg-main: #fff5f7; --bg-card: rgba(255, 255, 255, 0.9); --bg-sub: rgba(254, 226, 230, 0.5);
@@ -104,6 +108,7 @@
                     <span class="text-[11px] opacity-70">🎨 ธีม:</span>
                     <select id="themeSelector" onchange="changeTheme(this.value)" class="bg-[var(--bg-card)] border border-white/10 px-2 py-1 rounded-lg text-xs font-semibold focus:outline-none cursor-pointer">
                         <option value="dark-slate">🌙 สเลทเข้ม (Default)</option>
+                        <option value="pastel-gray">🤍 เทาพาสเทล</option>
                         <option value="dark-midnight">🌌 มิดไนท์บลู</option>
                         <option value="dark-rose">🌹 โรสพาสเทลเข้ม</option>
                         <option value="dark-emerald">🌲 เอเมอรัลด์ดาร์ก</option>
