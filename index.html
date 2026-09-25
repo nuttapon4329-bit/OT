@@ -379,10 +379,15 @@
                 deductStudentLoan: 1080,
                 deductOther: 0,
                 expensesList: [
-                    { name: "ค่าบ้าน/ค่าเช่า", amount: 3200 },
-                    { name: "ค่างวดรถ", amount: 4700 },
-                    { name: "ค่าน้ำ / ค่าไฟ", amount: 2513 },
-                    { name: "ค่าใช้จ่ายอื่นๆ", amount: 2000 }
+                    { name: "ค่าเช่าห้อง", amount: 3200 },
+                    { name: "ค่างวดบ้าน", amount: 4700 },
+                    { name: "ค่างวดรถ", amount: 2513 },
+                    { name: "ค่าบัตรเครดิต", amount: 2000 },
+                    { name: "SPayLater", amount: 1878 },
+                    { name: "SEasyCash", amount: 2225 },
+                    { name: "เน็ตบ้าน", amount: 268 },
+                    { name: "เน็ตมือถือ", amount: 375 },
+                    { name: "ให้แม่", amount: 1500 }
                 ],
                 otData: otRows
             };
@@ -665,11 +670,13 @@
             let totalDeductions = (parseFloat(document.getElementById('deductSocial').value) || 0) + (parseFloat(document.getElementById('deductStudentLoan').value) || 0) + (parseFloat(document.getElementById('deductOther').value) || 0);
             document.getElementById('totalDeductions').innerText = formatVal(totalDeductions);
 
+            // แก้ไขส่วนการรวมรายจ่ายประจำให้แม่นยำและครบทุกรายการ
             let totalExpenses = 0;
             cycle.expensesList.forEach((exp, idx) => {
                 let inp = document.getElementById(`expInput-${idx}`);
-                if (inp) cycle.expensesList[idx].amount = parseFloat(inp.value) || 0;
-                totalExpenses += cycle.expensesList[idx].amount;
+                let val = inp ? (parseFloat(inp.value) || 0) : (exp.amount || 0);
+                cycle.expensesList[idx].amount = val;
+                totalExpenses += val;
             });
             document.getElementById('totalExpenses').innerText = formatVal(totalExpenses);
 
