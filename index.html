@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="th" class="dark">
+<html lang="th" class="dark" id="htmlRoot" data-theme="dark-slate">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,11 +11,53 @@
         input[type="number"]::-webkit-inner-spin-button,
         input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; margin: 0; }
         .custom-scrollbar::-webkit-scrollbar { width: 5px; height: 5px; }
-        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(15, 23, 42, 0.6); border-radius: 8px; }
-        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(51, 65, 85, 0.8); border-radius: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.1); border-radius: 8px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(100, 100, 100, 0.3); border-radius: 8px; }
+
+        /* 10 Pastel Themes Styling */
+        :root, html[data-theme="dark-slate"] {
+            --bg-main: #030712; --bg-card: rgba(15, 23, 42, 0.85); --bg-sub: rgba(2, 6, 23, 0.6);
+            --border-color: #1e293b; --text-main: #f8fafc; --accent-color: #fbbf24; --accent-glow: rgba(251, 191, 36, 0.2);
+        }
+        html[data-theme="pastel-pink"] {
+            --bg-main: #fff5f7; --bg-card: rgba(255, 255, 255, 0.9); --bg-sub: rgba(254, 226, 230, 0.5);
+            --border-color: #fbcfe8; --text-main: #4c0519; --accent-color: #db2777; --accent-glow: rgba(219, 39, 119, 0.15);
+        }
+        html[data-theme="pastel-mint"] {
+            --bg-main: #f0fdf4; --bg-card: rgba(255, 255, 255, 0.9); --bg-sub: rgba(220, 252, 231, 0.5);
+            --border-color: #bbf7d0; --text-main: #064e3b; --accent-color: #059669; --accent-glow: rgba(5, 150, 105, 0.15);
+        }
+        html[data-theme="pastel-lavender"] {
+            --bg-main: #faf5ff; --bg-card: rgba(255, 255, 255, 0.9); --bg-sub: rgba(243, 232, 255, 0.5);
+            --border-color: #e9d5ff; --text-main: #3b0764; --accent-color: #7c3aed; --accent-glow: rgba(124, 58, 237, 0.15);
+        }
+        html[data-theme="pastel-peach"] {
+            --bg-main: #fffbeb; --bg-card: rgba(255, 255, 255, 0.9); --bg-sub: rgba(254, 243, 199, 0.5);
+            --border-color: #fde68a; --text-main: #451a03; --accent-color: #d97706; --accent-glow: rgba(217, 119, 6, 0.15);
+        }
+        html[data-theme="pastel-sky"] {
+            --bg-main: #f0f9ff; --bg-card: rgba(255, 255, 255, 0.9); --bg-sub: rgba(224, 242, 254, 0.5);
+            --border-color: #bae6fd; --text-main: #0c4a6e; --accent-color: #0284c7; --accent-glow: rgba(2, 132, 199, 0.15);
+        }
+        html[data-theme="dark-midnight"] {
+            --bg-main: #0f172a; --bg-card: rgba(30, 41, 59, 0.85); --bg-sub: rgba(15, 23, 42, 0.6);
+            --border-color: #334155; --text-main: #f1f5f9; --accent-color: #38bdf8; --accent-glow: rgba(56, 189, 248, 0.2);
+        }
+        html[data-theme="dark-rose"] {
+            --bg-main: #1c1117; --bg-card: rgba(41, 24, 34, 0.85); --bg-sub: rgba(28, 17, 23, 0.6);
+            --border-color: #583348; --text-main: #fce7f3; --accent-color: #f472b6; --accent-glow: rgba(244, 114, 182, 0.2);
+        }
+        html[data-theme="dark-emerald"] {
+            --bg-main: #061a14; --bg-card: rgba(11, 38, 30, 0.85); --bg-sub: rgba(6, 26, 20, 0.6);
+            --border-color: #1b4d3e; --text-main: #ecfdf5; --accent-color: #34d399; --accent-glow: rgba(52, 211, 153, 0.2);
+        }
+        html[data-theme="dark-purple"] {
+            --bg-main: #171026; --bg-card: rgba(30, 21, 51, 0.85); --bg-sub: rgba(23, 16, 38, 0.6);
+            --border-color: #4c3575; --text-main: #f5f3ff; --accent-color: #a78bfa; --accent-glow: rgba(167, 139, 250, 0.2);
+        }
     </style>
 </head>
-<body class="bg-[#030712] text-slate-100 min-h-screen selection:bg-amber-500 selection:text-slate-950 pb-20">
+<body class="bg-[var(--bg-main)] text-[var(--text-main)] min-h-screen selection:bg-[var(--accent-color)] selection:text-slate-950 pb-20 transition-colors duration-300">
 
     <!-- Loading Overlay -->
     <div id="loadingOverlay" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 flex flex-col items-center justify-center gap-3 transition-opacity">
@@ -24,48 +66,65 @@
     </div>
 
     <!-- Top Navigation Bar -->
-    <header class="border-b border-amber-500/30 bg-gradient-to-r from-slate-950 via-[#0d1527] to-slate-950 backdrop-blur-xl sticky top-0 z-40 px-4 xl:px-8 py-3.5 shadow-xl">
+    <header class="border-b border-white/10 bg-[var(--bg-card)] backdrop-blur-xl sticky top-0 z-40 px-4 xl:px-8 py-3.5 shadow-xl transition-colors duration-300">
         <div class="max-w-[1920px] mx-auto flex flex-col md:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3 w-full md:w-auto justify-between md:justify-start">
                 <div class="flex items-center gap-3">
-                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-slate-950 font-black shadow-lg shadow-amber-500/25 text-lg">
+                    <div class="w-10 h-10 rounded-2xl bg-gradient-to-tr from-amber-500 to-amber-300 flex items-center justify-center text-slate-950 font-black shadow-lg text-lg">
                         ฿
                     </div>
                     <div>
                         <div class="flex items-center gap-2">
-                            <h1 class="font-bold text-base md:text-lg text-white tracking-tight">คำนวณค่า OT & การเงิน</h1>
+                            <h1 class="font-bold text-base md:text-lg tracking-tight">คำนวณค่า OT & การเงิน</h1>
                             <span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded-md font-semibold">Cloud Sheet</span>
                         </div>
-                        <p class="text-[11px] text-slate-400">ซิงค์ข้อมูลอัตโนมัติผ่าน Google Sheet</p>
+                        <p class="text-[11px] opacity-70">ซิงค์ข้อมูลอัตโนมัติผ่าน Google Sheet</p>
                     </div>
                 </div>
             </div>
 
             <!-- Global Controls -->
-            <div class="flex flex-wrap items-center gap-2.5 bg-slate-900/95 p-1.5 rounded-2xl border border-slate-800 shadow-inner w-full md:w-auto justify-between">
-                <button onclick="openSummaryModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5" title="รายงานสรุปภาพรวม">
+            <div class="flex flex-wrap items-center gap-2 bg-[var(--bg-sub)] p-1.5 rounded-2xl border border-white/10 shadow-inner w-full md:w-auto justify-between">
+                <button onclick="openSummaryModal()" class="bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-400 border border-cyan-500/40 px-2.5 py-1.5 rounded-xl text-xs font-bold transition cursor-pointer flex items-center gap-1.5" title="รายงานสรุปภาพรวม">
                     <span>📊</span> สรุปภาพรวม
                 </button>
 
-                <div class="px-2 py-1 flex items-center gap-1.5 overflow-x-auto border-l border-slate-800 pl-2">
-                    <span class="text-[11px] text-slate-400 font-medium">รอบ:</span>
-                    <select id="selectMonthCycle" onchange="switchCycle(this.value)" class="bg-transparent text-amber-400 font-bold text-xs focus:outline-none cursor-pointer">
+                <div class="px-2 py-1 flex items-center gap-1.5 overflow-x-auto border-l border-white/10 pl-2">
+                    <span class="text-[11px] opacity-70 font-medium">รอบ:</span>
+                    <select id="selectMonthCycle" onchange="switchCycle(this.value)" class="bg-transparent font-bold text-xs focus:outline-none cursor-pointer">
                         <!-- Injected -->
                     </select>
-                    <button onclick="openNewCycleModal()" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 px-2 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer">
+                    <button onclick="openNewCycleModal()" class="bg-amber-500/20 hover:bg-amber-500/30 text-amber-400 border border-amber-500/40 px-2 py-1 rounded-lg text-[10px] font-bold transition cursor-pointer">
                         ➕ เพิ่มรอบ
                     </button>
                 </div>
 
-                <div class="flex items-center gap-2.5 pl-2.5 border-l border-slate-800">
+                <!-- Theme Selector Dropdown -->
+                <div class="flex items-center gap-1.5 pl-2 border-l border-white/10">
+                    <span class="text-[11px] opacity-70">🎨 ธีม:</span>
+                    <select id="themeSelector" onchange="changeTheme(this.value)" class="bg-[var(--bg-card)] border border-white/10 px-2 py-1 rounded-lg text-xs font-semibold focus:outline-none cursor-pointer">
+                        <option value="dark-slate">🌙 สเลทเข้ม (Default)</option>
+                        <option value="dark-midnight">🌌 มิดไนท์บลู</option>
+                        <option value="dark-rose">🌹 โรสพาสเทลเข้ม</option>
+                        <option value="dark-emerald">🌲 เอเมอรัลด์ดาร์ก</option>
+                        <option value="dark-purple">🔮 รอยัลพูเพิล</option>
+                        <option value="pastel-pink">🌸 ชมพูพาสเทล</option>
+                        <option value="pastel-mint">🌿 เขียวมิ้นท์</option>
+                        <option value="pastel-lavender">💜 ลาเวนเดอร์</option>
+                        <option value="pastel-peach">🍑 พีชละมุน</option>
+                        <option value="pastel-sky">☁️ ฟ้าพาสเทล</option>
+                    </select>
+                </div>
+
+                <div class="flex items-center gap-2 pl-2 border-l border-white/10">
                     <div class="text-right">
-                        <div class="text-[10px] uppercase tracking-wider text-amber-300/90 font-bold">รายรับรวมสุทธิ</div>
+                        <div class="text-[10px] uppercase tracking-wider font-bold opacity-80">รายรับรวมสุทธิ</div>
                         <div class="text-xl md:text-3xl font-black text-emerald-400 val-display leading-tight" id="topBarTotalIncome">0.00 ฿</div>
                     </div>
-                    <button onclick="togglePrivacy()" id="privacyToggleBtn" class="bg-slate-800 hover:bg-slate-700 text-slate-300 w-8 h-8 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ซ่อน/แสดง">
+                    <button onclick="togglePrivacy()" id="privacyToggleBtn" class="bg-[var(--bg-card)] border border-white/10 hover:opacity-80 w-8 h-8 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ซ่อน/แสดง">
                         👁️
                     </button>
-                    <button onclick="openSettingsModal()" class="bg-slate-800 hover:bg-slate-700 text-amber-300 w-8 h-8 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ตั้งค่า">
+                    <button onclick="openSettingsModal()" class="bg-[var(--bg-card)] border border-white/10 hover:opacity-80 w-8 h-8 rounded-xl flex items-center justify-center transition cursor-pointer text-xs" title="ตั้งค่า">
                         ⚙️
                     </button>
                 </div>
@@ -77,29 +136,29 @@
 
         <!-- Metrics Bar -->
         <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
-            <div class="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-xl p-3">
-                <div class="text-[10px] uppercase text-slate-400 font-medium">OT 1 แรง</div>
-                <div class="text-sm sm:text-base font-bold text-amber-400 mt-1 val-display" id="sumMoney1">0.00 ฿</div>
+            <div class="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-xl p-3 shadow-md">
+                <div class="text-[10px] uppercase opacity-70 font-medium">OT 1 แรง</div>
+                <div class="text-sm sm:text-base font-bold mt-1 val-display" id="sumMoney1">0.00 ฿</div>
             </div>
-            <div class="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-xl p-3">
-                <div class="text-[10px] uppercase text-slate-400 font-medium">OT 1.5 แรง</div>
-                <div class="text-sm sm:text-base font-bold text-amber-400 mt-1 val-display" id="sumMoney15">0.00 ฿</div>
+            <div class="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-xl p-3 shadow-md">
+                <div class="text-[10px] uppercase opacity-70 font-medium">OT 1.5 แรง</div>
+                <div class="text-sm sm:text-base font-bold mt-1 val-display" id="sumMoney15">0.00 ฿</div>
             </div>
-            <div class="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-xl p-3">
-                <div class="text-[10px] uppercase text-slate-400 font-medium">OT 3 แรง</div>
-                <div class="text-sm sm:text-base font-bold text-amber-400 mt-1 val-display" id="sumMoney3">0.00 ฿</div>
+            <div class="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-xl p-3 shadow-md">
+                <div class="text-[10px] uppercase opacity-70 font-medium">OT 3 แรง</div>
+                <div class="text-sm sm:text-base font-bold mt-1 val-display" id="sumMoney3">0.00 ฿</div>
             </div>
-            <div class="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-xl p-3">
-                <div class="text-[10px] uppercase text-slate-400 font-medium">พิเศษ (เงื่อนไข 100)</div>
+            <div class="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-xl p-3 shadow-md">
+                <div class="text-[10px] uppercase opacity-70 font-medium">พิเศษ (เงื่อนไข 100)</div>
                 <div class="text-sm sm:text-base font-bold text-cyan-400 mt-1 val-display" id="sumMoneyCondBonus">0.00 ฿</div>
             </div>
-            <div class="bg-slate-900/40 backdrop-blur-md border border-slate-800/60 rounded-xl p-3">
-                <div class="text-[10px] uppercase text-slate-400 font-medium">พิเศษอื่นๆ</div>
+            <div class="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-xl p-3 shadow-md">
+                <div class="text-[10px] uppercase opacity-70 font-medium">พิเศษอื่นๆ</div>
                 <div class="text-sm sm:text-base font-bold text-cyan-400 mt-1 val-display" id="sumMoneyBonus">0.00 ฿</div>
             </div>
-            <div class="bg-gradient-to-br from-amber-500/10 via-slate-900 to-slate-900 border border-amber-500/25 rounded-xl p-3 col-span-2 sm:col-span-3 lg:col-span-1 shadow-md">
-                <div class="text-[10px] uppercase text-amber-300 font-bold">รวมยอด OT ทั้งหมด</div>
-                <div class="text-base sm:text-lg font-extrabold text-amber-400 mt-1 val-display" id="sumMoneyTotalOT">0.00 ฿</div>
+            <div class="bg-[var(--bg-card)] backdrop-blur-md border border-white/10 rounded-xl p-3 col-span-2 sm:col-span-3 lg:col-span-1 shadow-md">
+                <div class="text-[10px] uppercase font-bold opacity-80">รวมยอด OT ทั้งหมด</div>
+                <div class="text-base sm:text-lg font-extrabold mt-1 val-display" id="sumMoneyTotalOT">0.00 ฿</div>
             </div>
         </div>
 
@@ -107,14 +166,14 @@
         <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
             
             <!-- Left: Table -->
-            <div class="lg:col-span-7 bg-slate-900/85 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-2xl flex flex-col justify-between">
+            <div class="lg:col-span-7 bg-[var(--bg-card)] backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl flex flex-col justify-between">
                 <div>
-                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2.5 mb-3 border-b border-slate-800">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 pb-2.5 mb-3 border-b border-white/10">
                         <div class="flex items-center gap-2">
                             <div class="w-7 h-7 rounded-lg bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 text-xs">🗓️</div>
                             <div>
-                                <h2 class="font-bold text-white text-xs">ตารางบันทึกวันทำงานและค่า OT</h2>
-                                <p class="text-[10px] text-slate-400" id="cycleTitleLabel">รอบวันที่ -</p>
+                                <h2 class="font-bold text-xs">ตารางบันทึกวันทำงานและค่า OT</h2>
+                                <p class="text-[10px] opacity-70" id="cycleTitleLabel">รอบวันที่ -</p>
                             </div>
                         </div>
                         <span id="syncStatusBadge" class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-md font-medium">
@@ -124,7 +183,7 @@
 
                     <div class="custom-scrollbar max-h-[620px] overflow-y-auto pr-1">
                         <table class="w-full text-left border-collapse text-xs">
-                            <thead class="sticky top-0 bg-slate-900/95 backdrop-blur-md z-20 border-b border-slate-800 text-slate-400 text-[11px]">
+                            <thead class="sticky top-0 bg-[var(--bg-card)] backdrop-blur-md z-20 border-b border-white/10 opacity-80 text-[11px]">
                                 <tr>
                                     <th class="py-2.5 px-2 font-medium">วันที่</th>
                                     <th class="py-2.5 px-1.5 text-center font-medium">มา</th>
@@ -137,61 +196,61 @@
                                     <th class="py-2.5 px-2 text-right font-medium">รวม</th>
                                 </tr>
                             </thead>
-                            <tbody id="otTableBody" class="divide-y divide-slate-800/40"></tbody>
+                            <tbody id="otTableBody" class="divide-y divide-white/10"></tbody>
                         </table>
                     </div>
                 </div>
 
-                <div class="mt-4 pt-3 border-t border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-2 bg-slate-950/60 p-3 rounded-xl border border-slate-800/80 text-xs">
-                    <div class="text-[11px] text-slate-400 space-y-0.5 text-center sm:text-left">
+                <div class="mt-4 pt-3 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-2 bg-[var(--bg-sub)] p-3 rounded-xl border border-white/10 text-xs">
+                    <div class="text-[11px] opacity-80 space-y-0.5 text-center sm:text-left">
                         <div>ทำงาน: <span id="sumWorkDays" class="text-emerald-400 font-bold">0</span> วัน (ข้าว: <span id="sumFoodNormalDays" class="text-emerald-300 font-bold">0</span> วัน) | เดินทาง: <span id="sumTravelDays" class="text-cyan-400 font-bold">0</span> วัน</div>
-                        <div>รวม ชม. (1.0): <span id="sumHrs1" class="text-white font-medium">0</span> | (1.5): <span id="sumHrs15" class="text-white font-medium">0</span> | (3.0): <span id="sumHrs3" class="text-white font-medium">0</span></div>
+                        <div>รวม ชม. (1.0): <span id="sumHrs1" class="font-medium">0</span> | (1.5): <span id="sumHrs15" class="font-medium">0</span> | (3.0): <span id="sumHrs3" class="font-medium">0</span></div>
                     </div>
                     <div class="text-center sm:text-right">
-                        <div class="text-[9px] uppercase tracking-wider text-slate-400">ยอดรวม OT</div>
-                        <div class="text-base font-extrabold text-amber-400 val-display" id="totalOT">0.00 ฿</div>
+                        <div class="text-[9px] uppercase tracking-wider opacity-70">ยอดรวม OT</div>
+                        <div class="text-base font-extrabold val-display" id="totalOT">0.00 ฿</div>
                     </div>
                 </div>
             </div>
 
             <!-- Right: Income & Expenses -->
             <div class="lg:col-span-5 space-y-4">
-                <div class="bg-slate-900/85 backdrop-blur-xl border border-slate-800 rounded-2xl p-4 shadow-2xl space-y-4">
-                    <div class="flex items-center justify-between pb-2.5 border-b border-slate-800">
+                <div class="bg-[var(--bg-card)] backdrop-blur-xl border border-white/10 rounded-2xl p-4 shadow-2xl space-y-4">
+                    <div class="flex items-center justify-between pb-2.5 border-b border-white/10">
                         <div class="flex items-center gap-2">
                             <div class="w-7 h-7 rounded-lg bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 text-xs">💰</div>
-                            <h2 class="font-bold text-white text-xs">สรุปรายการเงินรับ & รายจ่าย</h2>
+                            <h2 class="font-bold text-xs">สรุปรายการเงินรับ & รายจ่าย</h2>
                         </div>
                     </div>
 
                     <!-- รายรับ -->
-                    <div class="bg-slate-950/60 p-3.5 rounded-xl border border-slate-800/80 space-y-1.5 text-xs">
+                    <div class="bg-[var(--bg-sub)] p-3.5 rounded-xl border border-white/10 space-y-1.5 text-xs">
                         <div class="font-bold text-emerald-400 mb-1 flex items-center gap-1 text-xs"><span>📈</span> รายรับทั้งหมดในงวดนี้</div>
-                        <div class="grid grid-cols-3 font-medium text-slate-400 border-b border-slate-800 pb-1 text-[10px]">
+                        <div class="grid grid-cols-3 font-medium opacity-70 border-b border-white/10 pb-1 text-[10px]">
                             <span>รายการ</span><span class="text-center">เรต</span><span class="text-right">จำนวน (฿)</span>
                         </div>
                         <div class="grid grid-cols-3 items-center py-0.5">
-                            <span class="text-slate-300">เงินเดือนหลัก</span><span class="text-center text-slate-500">-</span>
-                            <span class="text-right"><input type="number" id="baseSalary" value="18609" oninput="markDataChanged()" class="bg-slate-900 text-emerald-400 font-bold px-2 py-0.5 rounded-md w-24 text-right border border-slate-700 text-xs"></span>
+                            <span class="opacity-90">เงินเดือนหลัก</span><span class="text-center opacity-50">-</span>
+                            <span class="text-right"><input type="number" id="baseSalary" value="18609" oninput="markDataChanged()" class="bg-[var(--bg-card)] text-emerald-400 font-bold px-2 py-0.5 rounded-md w-24 text-right border border-white/10 text-xs"></span>
                         </div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">ค่าตำแหน่ง</span><span class="text-center text-slate-500">-</span><span class="text-right text-emerald-400 font-semibold val-display">1,500.00</span></div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">ค่าโทรศัพท์</span><span class="text-center text-slate-500">-</span><span class="text-right text-emerald-400 font-semibold val-display">1,000.00</span></div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">ค่าอาหาร OT</span><span class="text-center text-slate-400">30</span><span id="incFoodOT" class="text-right text-slate-200 val-display">0.00</span></div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">ค่าอาหารปกติ</span><span class="text-center text-slate-400">50</span><span id="incFoodNormal" class="text-right text-slate-200 val-display">0.00</span></div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">ค่าอาหารวันหยุด</span><span class="text-center text-slate-400">100</span><span id="incFoodHoliday" class="text-right text-slate-200 val-display">0.00</span></div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">ค่าเดินทาง</span><span class="text-center text-slate-400">30</span><span id="incTravel" class="text-right text-slate-200 val-display">0.00</span></div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">เงินพิเศษ (+100)</span><span class="text-center text-slate-500">-</span><span id="incBonus100" class="text-right text-cyan-300 val-display">0.00</span></div>
-                        <div class="grid grid-cols-3 items-center py-0.5"><span class="text-slate-300">รวมค่า OT</span><span class="text-center text-slate-500">-</span><span id="incTotalOT" class="text-right text-amber-400 font-semibold val-display">0.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">ค่าตำแหน่ง</span><span class="text-center opacity-50">-</span><span class="text-right text-emerald-400 font-semibold val-display">1,500.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">ค่าโทรศัพท์</span><span class="text-center opacity-50">-</span><span class="text-right text-emerald-400 font-semibold val-display">1,000.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">ค่าอาหาร OT</span><span class="text-center opacity-60">30</span><span id="incFoodOT" class="text-right val-display">0.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">ค่าอาหารปกติ</span><span class="text-center opacity-60">50</span><span id="incFoodNormal" class="text-right val-display">0.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">ค่าอาหารวันหยุด</span><span class="text-center opacity-60">100</span><span id="incFoodHoliday" class="text-right val-display">0.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">ค่าเดินทาง</span><span class="text-center opacity-60">30</span><span id="incTravel" class="text-right val-display">0.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">เงินพิเศษ (+100)</span><span class="text-center opacity-50">-</span><span id="incBonus100" class="text-right text-cyan-300 val-display">0.00</span></div>
+                        <div class="grid grid-cols-3 items-center py-0.5"><span class="opacity-90">รวมค่า OT</span><span class="text-center opacity-50">-</span><span id="incTotalOT" class="text-right font-semibold val-display">0.00</span></div>
                         
-                        <div class="bg-slate-900 p-2 rounded-lg border border-slate-800 space-y-1 mt-1.5">
+                        <div class="bg-[var(--bg-card)] p-2 rounded-lg border border-white/10 space-y-1 mt-1.5">
                             <div class="grid grid-cols-3 items-center">
-                                <span class="text-slate-300">เบี้ยขยัน</span><span class="text-center text-slate-500">-</span>
-                                <span class="text-right"><input type="number" id="incentiveInput" value="0" oninput="markDataChanged()" class="bg-slate-950 text-white font-semibold px-2 py-0.5 rounded-md w-20 text-right border border-slate-700 text-xs"></span>
+                                <span class="opacity-90">เบี้ยขยัน</span><span class="text-center opacity-50">-</span>
+                                <span class="text-right"><input type="number" id="incentiveInput" value="0" oninput="markDataChanged()" class="bg-[var(--bg-sub)] font-semibold px-2 py-0.5 rounded-md w-20 text-right border border-white/10 text-xs"></span>
                             </div>
-                            <input type="text" id="incentiveNote" placeholder="หมายเหตุ เช่น มาสาย 1 ครั้ง" oninput="markDataChanged()" class="w-full bg-slate-950 text-slate-300 px-2 py-1 rounded-md border border-slate-800 text-[10px]">
+                            <input type="text" id="incentiveNote" placeholder="หมายเหตุ เช่น มาสาย 1 ครั้ง" oninput="markDataChanged()" class="w-full bg-[var(--bg-sub)] opacity-90 px-2 py-1 rounded-md border border-white/10 text-[10px]">
                         </div>
 
-                        <div class="border-t border-slate-800 pt-2 grid grid-cols-3 items-center font-bold text-emerald-300 text-xs">
+                        <div class="border-t border-white/10 pt-2 grid grid-cols-3 items-center font-bold text-emerald-300 text-xs">
                             <span>รายรับรวมทั้งหมด</span><span></span><span id="totalIncome" class="text-right text-emerald-400 text-sm font-extrabold val-display">0.00 ฿</span>
                         </div>
                     </div>
@@ -199,9 +258,9 @@
                     <!-- รายการหัก -->
                     <div class="bg-rose-950/15 p-3.5 rounded-xl border border-rose-900/30 space-y-2 text-xs">
                         <div class="font-bold text-rose-400 mb-1 flex items-center gap-1 text-xs"><span>🛑</span> รายการหักประจำงวด</div>
-                        <div class="grid grid-cols-2 items-center gap-2"><span class="text-slate-300">ประกันสังคม</span><input type="number" id="deductSocial" value="875" oninput="markDataChanged()" class="bg-slate-950 text-rose-300 px-2 py-1 rounded-lg text-right border border-rose-900/40 text-xs"></div>
-                        <div class="grid grid-cols-2 items-center gap-2"><span class="text-slate-300">กยศ.</span><input type="number" id="deductStudentLoan" value="1080" oninput="markDataChanged()" class="bg-slate-950 text-rose-300 px-2 py-1 rounded-lg text-right border border-rose-900/40 text-xs"></div>
-                        <div class="grid grid-cols-2 items-center gap-2"><span class="text-slate-300">อื่นๆ</span><input type="number" id="deductOther" value="0" oninput="markDataChanged()" class="bg-slate-950 text-rose-300 px-2 py-1 rounded-lg text-right border border-rose-900/40 text-xs"></div>
+                        <div class="grid grid-cols-2 items-center gap-2"><span class="opacity-90">ประกันสังคม</span><input type="number" id="deductSocial" value="875" oninput="markDataChanged()" class="bg-[var(--bg-sub)] text-rose-400 px-2 py-1 rounded-lg text-right border border-rose-900/40 text-xs"></div>
+                        <div class="grid grid-cols-2 items-center gap-2"><span class="opacity-90">กยศ.</span><input type="number" id="deductStudentLoan" value="1080" oninput="markDataChanged()" class="bg-[var(--bg-sub)] text-rose-400 px-2 py-1 rounded-lg text-right border border-rose-900/40 text-xs"></div>
+                        <div class="grid grid-cols-2 items-center gap-2"><span class="opacity-90">อื่นๆ</span><input type="number" id="deductOther" value="0" oninput="markDataChanged()" class="bg-[var(--bg-sub)] text-rose-400 px-2 py-1 rounded-lg text-right border border-rose-900/40 text-xs"></div>
                         <div class="border-t border-rose-900/40 pt-2 grid grid-cols-2 items-center font-bold text-rose-400 text-xs">
                             <span>รวมหัก</span><span id="totalDeductions" class="text-right text-sm val-display">1,955.00 ฿</span>
                         </div>
@@ -224,19 +283,19 @@
                         <div class="font-bold text-cyan-400 mb-1 flex items-center gap-1 text-xs"><span>⛽</span> ประมาณการค่าใช้จ่ายรายวัน & เงินโอนเก็บ</div>
                         
                         <div class="grid grid-cols-2 items-center gap-2">
-                            <span class="text-slate-300">ค่าใช้จ่ายต่อวัน (฿)</span>
-                            <input type="number" id="dailyExpenseRate" value="200" oninput="markDataChanged()" class="bg-slate-950 text-cyan-300 px-2 py-1 rounded-lg text-right border border-cyan-900/40 text-xs">
+                            <span class="opacity-90">ค่าใช้จ่ายต่อวัน (฿)</span>
+                            <input type="number" id="dailyExpenseRate" value="200" oninput="markDataChanged()" class="bg-[var(--bg-sub)] text-cyan-400 px-2 py-1 rounded-lg text-right border border-cyan-900/40 text-xs">
                         </div>
                         <div class="grid grid-cols-2 items-center gap-2">
-                            <span class="text-slate-300">ค่าน้ำมันต่อวัน (฿)</span>
-                            <input type="number" id="dailyFuelRate" value="40" oninput="markDataChanged()" class="bg-slate-950 text-cyan-300 px-2 py-1 rounded-lg text-right border border-cyan-900/40 text-xs">
+                            <span class="opacity-90">ค่าน้ำมันต่อวัน (฿)</span>
+                            <input type="number" id="dailyFuelRate" value="40" oninput="markDataChanged()" class="bg-[var(--bg-sub)] text-cyan-400 px-2 py-1 rounded-lg text-right border border-cyan-900/40 text-xs">
                         </div>
-                        <div class="text-[10px] text-slate-400 text-right pt-0.5">
-                            (คำนวณจากจำนวนวันทำงานทั้งหมดในรอบนี้: <span id="totalDaysCount" class="text-cyan-300 font-bold">0</span> วัน)
+                        <div class="text-[10px] opacity-70 text-right pt-0.5">
+                            (คำนวณจากจำนวนวันทำงานทั้งหมดในรอบนี้: <span id="totalDaysCount" class="text-cyan-400 font-bold">0</span> วัน)
                         </div>
-                        <div class="grid grid-cols-2 items-center gap-2 pt-1 border-t border-cyan-900/30 text-slate-300">
+                        <div class="grid grid-cols-2 items-center gap-2 pt-1 border-t border-cyan-900/30 opacity-90">
                             <span>รวมค่าใช้จ่ายรายวันทั้งเดือน</span>
-                            <span id="totalDailyExpenseCalc" class="text-right font-semibold text-cyan-300 val-display">0.00 ฿</span>
+                            <span id="totalDailyExpenseCalc" class="text-right font-semibold val-display">0.00 ฿</span>
                         </div>
                         
                         <div class="border-t border-cyan-900/40 pt-2 flex items-center justify-between font-extrabold text-sm">
@@ -247,10 +306,10 @@
                 </div>
 
                 <!-- Net Balance -->
-                <div class="bg-gradient-to-r from-slate-950 via-[#111c33] to-slate-950 border border-cyan-500/30 rounded-2xl p-4 shadow-2xl flex items-center justify-between">
+                <div class="bg-[var(--bg-card)] border border-cyan-500/30 rounded-2xl p-4 shadow-2xl flex items-center justify-between">
                     <div>
                         <div class="text-[9px] uppercase tracking-wider text-cyan-400 font-semibold">คงเหลือสุทธิ</div>
-                        <div class="text-[10px] text-slate-400">หลังหักทุกอย่าง</div>
+                        <div class="text-[10px] opacity-70">หลังหักทุกอย่าง</div>
                     </div>
                     <div class="text-base md:text-lg font-extrabold text-cyan-400 val-display" id="netBalance">0.00 ฿</div>
                 </div>
@@ -260,19 +319,19 @@
 
     <!-- Modal: รายงานสรุปภาพรวมรายเดือน -->
     <div id="summaryModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-3 sm:p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-3xl w-full max-w-4xl p-5 md:p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <div class="bg-[var(--bg-card)] border border-white/10 rounded-3xl w-full max-w-4xl p-5 md:p-6 shadow-2xl space-y-4 max-h-[90vh] flex flex-col">
+            <div class="flex justify-between items-center border-b border-white/10 pb-3">
                 <div class="flex items-center gap-2">
                     <span class="text-lg">📊</span>
                     <h3 class="font-bold text-cyan-400 text-sm md:text-base">รายงานสรุปภาพรวม OT และรายรับทุกรอบเดือน</h3>
                 </div>
-                <button onclick="closeSummaryModal()" class="text-slate-400 hover:text-white text-sm font-bold w-8 h-8 rounded-xl bg-slate-800 flex items-center justify-center transition cursor-pointer">✕</button>
+                <button onclick="closeSummaryModal()" class="opacity-70 hover:opacity-100 text-sm font-bold w-8 h-8 rounded-xl bg-[var(--bg-sub)] flex items-center justify-center transition cursor-pointer">✕</button>
             </div>
             
             <div class="custom-scrollbar overflow-y-auto pr-1 flex-1 space-y-3">
                 <div class="overflow-x-auto">
                     <table class="w-full text-left border-collapse text-xs">
-                        <thead class="bg-slate-950 sticky top-0 border-b border-slate-800 text-slate-400 text-[11px]">
+                        <thead class="bg-[var(--bg-sub)] sticky top-0 border-b border-white/15 opacity-80 text-[11px]">
                             <tr>
                                 <th class="py-2.5 px-3 font-medium">รอบเดือน</th>
                                 <th class="py-2.5 px-2 text-center font-medium">1.0 ชม.</th>
@@ -282,30 +341,30 @@
                                 <th class="py-2.5 px-3 text-right font-medium text-emerald-400">รายรับรวมสุทธิ</th>
                             </tr>
                         </thead>
-                        <tbody id="summaryTableBody" class="divide-y divide-slate-800/50"></tbody>
+                        <tbody id="summaryTableBody" class="divide-y divide-white/10"></tbody>
                     </table>
                 </div>
             </div>
 
-            <div class="flex justify-end pt-2 border-t border-slate-800">
-                <button onclick="closeSummaryModal()" class="bg-slate-800 hover:bg-slate-700 text-white px-5 py-2 rounded-xl text-xs font-medium transition cursor-pointer">ปิดหน้าต่าง</button>
+            <div class="flex justify-end pt-2 border-t border-white/10">
+                <button onclick="closeSummaryModal()" class="bg-[var(--bg-sub)] hover:opacity-80 px-5 py-2 rounded-xl text-xs font-medium transition cursor-pointer">ปิดหน้าต่าง</button>
             </div>
         </div>
     </div>
 
     <!-- Modal: เพิ่มรอบเดือน -->
     <div id="newCycleModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-3">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <div class="bg-[var(--bg-card)] border border-white/10 rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-3">
+            <div class="flex justify-between items-center border-b border-white/10 pb-2">
                 <h3 class="font-bold text-amber-400 text-xs">🗓️ กำหนดช่วงเวลารอบเดือนใหม่</h3>
-                <button onclick="closeNewCycleModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
+                <button onclick="closeNewCycleModal()" class="opacity-70 hover:opacity-100 text-xs">✕</button>
             </div>
             <div class="space-y-2 text-xs">
-                <div><label class="text-slate-400 block mb-1">วันเริ่มต้น</label><input type="date" id="newStartDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs"></div>
-                <div><label class="text-slate-400 block mb-1">วันสิ้นสุด</label><input type="date" id="newEndDate" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-2 text-white text-xs"></div>
+                <div><label class="opacity-70 block mb-1">วันเริ่มต้น</label><input type="date" id="newStartDate" class="w-full bg-[var(--bg-sub)] border border-white/10 rounded-xl px-3 py-2 text-xs"></div>
+                <div><label class="opacity-70 block mb-1">วันสิ้นสุด</label><input type="date" id="newEndDate" class="w-full bg-[var(--bg-sub)] border border-white/10 rounded-xl px-3 py-2 text-xs"></div>
             </div>
             <div class="flex justify-end gap-2 pt-2">
-                <button onclick="closeNewCycleModal()" class="bg-slate-800 text-slate-300 px-3 py-1.5 rounded-xl text-xs">ยกเลิก</button>
+                <button onclick="closeNewCycleModal()" class="bg-[var(--bg-sub)] opacity-80 px-3 py-1.5 rounded-xl text-xs">ยกเลิก</button>
                 <button onclick="createNewCycleCustom()" class="bg-emerald-600 text-white px-4 py-1.5 rounded-xl text-xs">สร้างรอบใหม่</button>
             </div>
         </div>
@@ -313,34 +372,34 @@
 
     <!-- Modal: ตั้งค่า OT -->
     <div id="settingsModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-3">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <div class="bg-[var(--bg-card)] border border-white/10 rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-3">
+            <div class="flex justify-between items-center border-b border-white/10 pb-2">
                 <h3 class="font-bold text-amber-400 text-xs">⚙️ จัดการตัวเลือกชั่วโมง OT</h3>
-                <button onclick="closeSettingsModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
+                <button onclick="closeSettingsModal()" class="opacity-70 hover:opacity-100 text-xs">✕</button>
             </div>
             <div class="flex gap-2">
-                <input type="number" step="0.5" id="newOptionInput" placeholder="เช่น -8, 2, 5" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 flex-1 text-xs text-white">
+                <input type="number" step="0.5" id="newOptionInput" placeholder="เช่น -8, 2, 5" class="bg-[var(--bg-sub)] border border-white/10 rounded-xl px-3 py-1.5 flex-1 text-xs">
                 <button onclick="addOtOption()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs">เพิ่ม</button>
             </div>
-            <div id="optionsListContainer" class="max-h-40 overflow-y-auto space-y-1.5 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800"></div>
-            <div class="flex justify-end pt-1"><button onclick="closeSettingsModal()" class="bg-slate-800 text-white px-4 py-1.5 rounded-xl text-xs">เสร็จสิ้น</button></div>
+            <div id="optionsListContainer" class="max-h-40 overflow-y-auto space-y-1.5 bg-[var(--bg-sub)] p-2.5 rounded-xl border border-white/10"></div>
+            <div class="flex justify-end pt-1"><button onclick="closeSettingsModal()" class="bg-[var(--bg-sub)] border border-white/10 px-4 py-1.5 rounded-xl text-xs">เสร็จสิ้น</button></div>
         </div>
     </div>
 
     <!-- Modal: รายจ่าย -->
     <div id="expenseModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-3">
-            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <div class="bg-[var(--bg-card)] border border-white/10 rounded-2xl w-full max-w-sm p-5 shadow-2xl space-y-3">
+            <div class="flex justify-between items-center border-b border-white/10 pb-2">
                 <h3 class="font-bold text-amber-400 text-xs">💸 จัดการรายการรายจ่าย</h3>
-                <button onclick="closeExpenseModal()" class="text-slate-400 hover:text-white text-xs">✕</button>
+                <button onclick="closeExpenseModal()" class="opacity-70 hover:opacity-100 text-xs">✕</button>
             </div>
             <div class="flex gap-2">
-                <input type="text" id="newExpName" placeholder="ชื่อรายการ" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 flex-1 text-xs text-white">
-                <input type="number" id="newExpAmount" placeholder="จำนวน" class="bg-slate-950 border border-slate-800 rounded-xl px-3 py-1.5 w-20 text-xs text-white">
+                <input type="text" id="newExpName" placeholder="ชื่อรายการ" class="bg-[var(--bg-sub)] border border-white/10 rounded-xl px-3 py-1.5 flex-1 text-xs">
+                <input type="number" id="newExpAmount" placeholder="จำนวน" class="bg-[var(--bg-sub)] border border-white/10 rounded-xl px-3 py-1.5 w-20 text-xs">
                 <button onclick="addExpenseItem()" class="bg-emerald-600 text-white px-3 py-1.5 rounded-xl text-xs">เพิ่ม</button>
             </div>
-            <div id="expenseListContainer" class="max-h-40 overflow-y-auto space-y-1.5 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800"></div>
-            <div class="flex justify-end pt-1"><button onclick="closeExpenseModal()" class="bg-slate-800 text-white px-4 py-1.5 rounded-xl text-xs">เสร็จสิ้น</button></div>
+            <div id="expenseListContainer" class="max-h-40 overflow-y-auto space-y-1.5 bg-[var(--bg-sub)] p-2.5 rounded-xl border border-white/10"></div>
+            <div class="flex justify-end pt-1"><button onclick="closeExpenseModal()" class="bg-[var(--bg-sub)] border border-white/10 px-4 py-1.5 rounded-xl text-xs">เสร็จสิ้น</button></div>
         </div>
     </div>
 
@@ -350,7 +409,8 @@
 
         let dbData = {
             otOptions: [-8, 1, 4, 6, 8],
-            allCyclesData: {}
+            allCyclesData: {},
+            selectedTheme: "dark-slate"
         };
         let currentCycleKey = "";
         let isPrivacyMode = false;
@@ -377,9 +437,31 @@
                 createCycleByRange("2026-09-21", "2026-10-20");
             }
 
+            // ตั้งค่าธีมเริ่มต้น
+            if (dbData.selectedTheme) {
+                document.getElementById('themeSelector').value = dbData.selectedTheme;
+                document.getElementById('htmlRoot').setAttribute('data-theme', dbData.selectedTheme);
+                if (dbData.selectedTheme.startsWith('pastel-')) {
+                    document.getElementById('htmlRoot').classList.remove('dark');
+                } else {
+                    document.getElementById('htmlRoot').classList.add('dark');
+                }
+            }
+
             document.getElementById('loadingOverlay').style.display = 'none';
             updateCycleSelectDropdown();
             loadCurrentCycleData();
+        }
+
+        function changeTheme(themeName) {
+            dbData.selectedTheme = themeName;
+            document.getElementById('htmlRoot').setAttribute('data-theme', themeName);
+            if (themeName.startsWith('pastel-')) {
+                document.getElementById('htmlRoot').classList.remove('dark');
+            } else {
+                document.getElementById('htmlRoot').classList.add('dark');
+            }
+            saveToCloud();
         }
 
         function createDefaultData() {
@@ -586,15 +668,15 @@
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="py-2.5 px-2 font-medium text-slate-300 w-20">${row.date}</td>
+                    <td class="py-2.5 px-2 font-medium w-20">${row.date}</td>
                     <td class="py-2.5 px-1.5 text-center"><input type="checkbox" ${row.worked ? 'checked' : ''} onchange="updateData(${index}, 'worked', this.checked)" class="w-4 h-4 accent-emerald-500 rounded cursor-pointer"></td>
                     <td class="py-2.5 px-1.5 text-center"><input type="checkbox" ${row.holiday ? 'checked' : ''} onchange="updateData(${index}, 'holiday', this.checked)" class="w-4 h-4 accent-rose-500 rounded cursor-pointer"></td>
-                    <td class="py-2.5 px-2 text-center"><select onchange="updateData(${index}, 'h1', this.value)" class="bg-slate-950 border border-slate-800 rounded-lg px-1.5 py-1 w-16 text-center text-xs text-amber-300 cursor-pointer">${renderDropdownOptions(row.h1)}</select></td>
-                    <td class="py-2.5 px-2 text-center"><select onchange="updateData(${index}, 'h15', this.value)" class="bg-slate-950 border border-slate-800 rounded-lg px-1.5 py-1 w-16 text-center text-xs text-amber-300 cursor-pointer">${renderDropdownOptions(row.h15)}</select></td>
-                    <td class="py-2.5 px-2 text-center"><select onchange="updateData(${index}, 'h3', this.value)" class="bg-slate-950 border border-slate-800 rounded-lg px-1.5 py-1 w-16 text-center text-xs text-amber-300 cursor-pointer">${renderDropdownOptions(row.h3)}</select></td>
-                    <td class="py-2.5 px-2 text-center"><span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${hasBonus100 ? 'bg-cyan-500/20 text-cyan-300' : 'text-slate-600'}">${hasBonus100 ? '+100' : '-'}</span></td>
-                    <td class="py-2.5 px-2 text-center"><input type="number" min="0" placeholder="-" value="${row.bonus || ''}" onchange="updateData(${index}, 'bonus', this.value)" class="bg-slate-950 border border-slate-800 rounded-lg px-1 py-1 w-14 text-center text-xs text-white"></td>
-                    <td class="py-2.5 px-2 text-right font-medium text-amber-300 val-display" id="rowTotal-${index}">-</td>
+                    <td class="py-2.5 px-2 text-center"><select onchange="updateData(${index}, 'h1', this.value)" class="bg-[var(--bg-sub)] border border-white/10 rounded-lg px-1.5 py-1 w-16 text-center text-xs cursor-pointer">${renderDropdownOptions(row.h1)}</select></td>
+                    <td class="py-2.5 px-2 text-center"><select onchange="updateData(${index}, 'h15', this.value)" class="bg-[var(--bg-sub)] border border-white/10 rounded-lg px-1.5 py-1 w-16 text-center text-xs cursor-pointer">${renderDropdownOptions(row.h15)}</select></td>
+                    <td class="py-2.5 px-2 text-center"><select onchange="updateData(${index}, 'h3', this.value)" class="bg-[var(--bg-sub)] border border-white/10 rounded-lg px-1.5 py-1 w-16 text-center text-xs cursor-pointer">${renderDropdownOptions(row.h3)}</select></td>
+                    <td class="py-2.5 px-2 text-center"><span class="text-[10px] px-1.5 py-0.5 rounded font-bold ${hasBonus100 ? 'bg-cyan-500/20 text-cyan-300' : 'opacity-40'}">${hasBonus100 ? '+100' : '-'}</span></td>
+                    <td class="py-2.5 px-2 text-center"><input type="number" min="0" placeholder="-" value="${row.bonus || ''}" onchange="updateData(${index}, 'bonus', this.value)" class="bg-[var(--bg-sub)] border border-white/10 rounded-lg px-1 py-1 w-14 text-center text-xs"></td>
+                    <td class="py-2.5 px-2 text-right font-medium val-display" id="rowTotal-${index}">-</td>
                 `;
                 tbody.appendChild(tr);
             });
@@ -628,10 +710,10 @@
                 div.innerHTML = `
                     <div class="col-span-7 flex items-center gap-2">
                         <input type="checkbox" ${isPaid ? 'checked' : ''} onchange="updateExpensePaid(${idx}, this.checked)" class="w-3.5 h-3.5 accent-amber-500 rounded cursor-pointer" title="ติ๊กเมื่อจ่ายแล้ว">
-                        <span class="truncate text-slate-300 ${isPaid ? 'line-through text-slate-500' : ''}" id="expNameText-${idx}">${exp.name}</span>
+                        <span class="truncate ${isPaid ? 'line-through opacity-50' : 'opacity-90'}" id="expNameText-${idx}">${exp.name}</span>
                     </div>
                     <div class="col-span-5 text-right">
-                        <input type="number" id="expInput-${idx}" value="${exp.amount}" oninput="markDataChanged()" class="bg-slate-950 ${isPaid ? 'text-slate-500 line-through' : 'text-amber-300'} px-2 py-0.5 rounded-lg text-right border border-amber-900/40 text-xs w-full">
+                        <input type="number" id="expInput-${idx}" value="${exp.amount}" oninput="markDataChanged()" class="bg-[var(--bg-sub)] ${isPaid ? 'opacity-50 line-through' : ''} px-2 py-0.5 rounded-lg text-right border border-white/10 text-xs w-full">
                     </div>
                 `;
                 container.appendChild(div);
@@ -825,10 +907,10 @@
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td class="py-2.5 px-3 font-semibold text-slate-200">${label}</td>
-                    <td class="py-2.5 px-2 text-center text-amber-300 font-medium">${h1Total} ชม.</td>
-                    <td class="py-2.5 px-2 text-center text-amber-300 font-medium">${h15Total} ชม.</td>
-                    <td class="py-2.5 px-2 text-center text-amber-300 font-medium">${h3Total} ชม.</td>
+                    <td class="py-2.5 px-3 font-semibold">${label}</td>
+                    <td class="py-2.5 px-2 text-center font-medium">${h1Total} ชม.</td>
+                    <td class="py-2.5 px-2 text-center font-medium">${h15Total} ชม.</td>
+                    <td class="py-2.5 px-2 text-center font-medium">${h3Total} ชม.</td>
                     <td class="py-2.5 px-2 text-right text-amber-400 font-bold val-display">${otMoneyTotal.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ฿</td>
                     <td class="py-2.5 px-3 text-right text-emerald-400 font-extrabold val-display">${totalIncome.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} ฿</td>
                 `;
@@ -849,7 +931,7 @@
             const container = document.getElementById('optionsListContainer');
             container.innerHTML = '';
             dbData.otOptions.sort((a,b)=>a-b).forEach((opt, idx) => {
-                container.innerHTML += `<div class="flex justify-between items-center bg-slate-900 px-3 py-1.5 rounded-lg text-xs"><span class="text-amber-300 font-semibold">${opt} ชม.</span><button onclick="deleteOtOption(${idx})" class="text-rose-400 text-[10px] cursor-pointer">ลบ</button></div>`;
+                container.innerHTML += `<div class="flex justify-between items-center bg-[var(--bg-card)] px-3 py-1.5 rounded-lg text-xs"><span class="font-semibold">${opt} ชม.</span><button onclick="deleteOtOption(${idx})" class="text-rose-400 text-[10px] cursor-pointer">ลบ</button></div>`;
             });
         }
         function addOtOption() {
@@ -869,7 +951,7 @@
             const container = document.getElementById('expenseListContainer');
             container.innerHTML = '';
             cycle.expensesList.forEach((exp, idx) => {
-                container.innerHTML += `<div class="flex justify-between items-center bg-slate-900 px-3 py-1.5 rounded-lg text-xs"><span class="text-amber-300">${exp.name} (${exp.amount.toLocaleString()} ฿)</span><button onclick="deleteExpenseItem(${idx})" class="text-rose-400 text-[10px] cursor-pointer">ลบ</button></div>`;
+                container.innerHTML += `<div class="flex justify-between items-center bg-[var(--bg-card)] px-3 py-1.5 rounded-lg text-xs"><span>${exp.name} (${exp.amount.toLocaleString()} ฿)</span><button onclick="deleteExpenseItem(${idx})" class="text-rose-400 text-[10px] cursor-pointer">ลบ</button></div>`;
             });
         }
         function addExpenseItem() {
