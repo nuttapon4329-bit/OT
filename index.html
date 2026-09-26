@@ -15,11 +15,15 @@
         .custom-scrollbar::-webkit-scrollbar-thumb { background: rgba(100, 100, 100, 0.3); border-radius: 8px; }
 
         /* ปรับแต่งสีข้อความฟ้าอัตโนมัติระหว่างธีมมืดและธีมสว่าง */
-        html.dark .dynamic-cyan { color: #38bdf8 !important; } /* ฟ้าสว่างสำหรับธีมมืด */
-        html:not(.dark) .dynamic-cyan { color: #0284c7 !important; } /* ฟ้าเข้มขัดเจนขึ้นสำหรับธีมสว่าง */
+        html.dark .dynamic-cyan { color: #38bdf8 !important; } 
+        html:not(.dark) .dynamic-cyan { color: #0284c7 !important; } 
 
         html.dark .dynamic-cyan-300 { color: #7dd3fc !important; }
         html:not(.dark) .dynamic-cyan-300 { color: #0369a1 !important; }
+
+        /* ปรับแต่งสีข้อความเหลือง/ทองอัตโนมัติระหว่างธีมมืดและธีมสว่าง */
+        html.dark .dynamic-amber, html.dark .text-amber-300, html.dark .text-amber-400 { color: #fbbf24 !important; }
+        html:not(.dark) .dynamic-amber, html:not(.dark) .text-amber-300, html:not(.dark) .text-amber-400 { color: #b45309 !important; } /* สีเหลืองทองเข้ม ชัดเจนบนพื้นหลังสว่าง */
 
         /* 11 Custom Themes Styling */
         :root, html[data-theme="dark-slate"] {
